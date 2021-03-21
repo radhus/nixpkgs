@@ -1,32 +1,58 @@
-{ lib, stdenv, fetchurl, pkg-config, glib, gdk-pixbuf, pango, cairo, libxml2
-, bzip2, libintl, darwin, rustc, cargo, gnome3
-, vala, gobject-introspection }:
+{ lib
+, stdenv
+, fetchurl
+, pkg-config
+, glib
+, gdk-pixbuf
+, pango
+, cairo
+, libxml2
+, bzip2
+, libintl
+, darwin
+, rustc
+, cargo
+, gnome3
+, vala
+, gobject-introspection
+, nixosTests
+}:
 
-let
-  pname = "librsvg";
-  version = "2.50.1";
-in
 stdenv.mkDerivation rec {
-  name = "${pname}-${version}";
-
-  src = fetchurl {
-    url = "mirror://gnome/sources/${pname}/${lib.versions.majorMinor version}/${name}.tar.xz";
-    sha256 = "02csvx2nzygh8kyal2qiy3y6xb7d52vszxxr37dzav704a9pkncv";
-  };
+  pname = "librsvg";
+  version = "2.50.4";
 
   outputs = [ "out" "dev" "installedTests" ];
 
-  buildInputs = [ libxml2 bzip2 pango libintl ]
-    ++ lib.optionals stdenv.isDarwin [ darwin.libobjc ];
+  src = fetchurl {
+    url = "mirror://gnome/sources/${pname}/${lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
+    sha256 = "18s0c5bqj88gj5lf62mfprvhwfibnkrxi6h2r2si0b4p9dxi1dis";
+  };
 
-  NIX_LDFLAGS = if stdenv.isDarwin then "-lobjc" else null;
+  nativeBuildInputs = [
+    pkg-config
+    rustc
+    cargo
+    vala
+    gobject-introspection
+  ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
+    ApplicationServices
+  ]);
 
-  propagatedBuildInputs = [ glib gdk-pixbuf cairo ];
+  buildInputs = [
+    libxml2
+    bzip2
+    pango
+    libintl
+  ] ++ lib.optionals stdenv.isDarwin [
+    darwin.libobjc
+  ];
 
-  nativeBuildInputs = [ pkg-config rustc cargo vala gobject-introspection ]
-    ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
-      ApplicationServices
-    ]);
+  propagatedBuildInputs = [
+    glib
+    gdk-pixbuf
+    cairo
+  ];
 
   configureFlags = [
     "--enable-introspection"
@@ -36,12 +62,15 @@ stdenv.mkDerivation rec {
   ] ++ lib.optional stdenv.isDarwin "--disable-Bsymbolic";
 
   makeFlags = [
-    "installed_test_metadir=$(installedTests)/share/installed-tests/RSVG"
-    "installed_testdir=$(installedTests)/libexec/installed-tests/RSVG"
+    "installed_test_metadir=${placeholder "installedTests"}/share/installed-tests/RSVG"
+    "installed_testdir=${placeholder "installedTests"}/libexec/installed-tests/RSVG"
   ];
 
-  NIX_CFLAGS_COMPILE
-    = lib.optionalString stdenv.isDarwin "-I${cairo.dev}/include/cairo";
+  NIX_CFLAGS_COMPILE = if stdenv.isDarwin then "-I${cairo.dev}/include/cairo" else null;
+
+  NIX_LDFLAGS = if stdenv.isDarwin then "-lobjc" else null;
+
+  doCheck = false; # all tests fail on libtool-generated rsvg-convert not being able to find coreutils
 
   # It wants to add loaders and update the loaders.cache in gdk-pixbuf
   # Patching the Makefiles to it creates rsvg specific loaders and the
@@ -62,8 +91,6 @@ stdenv.mkDerivation rec {
     sed -e "s#@bindir@\(/gdk-pixbuf-thumbnailer\)#${gdk-pixbuf}/bin\1#g" \
         -i gdk-pixbuf-loader/librsvg.thumbnailer.in
   '';
-
-  doCheck = false; # fails 20 of 145 tests, very likely to be buggy
 
   # Merge gdkpixbuf and librsvg loaders
   postInstall = ''
