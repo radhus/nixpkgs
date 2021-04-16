@@ -104,6 +104,10 @@ stdenv.mkDerivation rec {
       packageName = pname;
       versionPolicy = "odd-unstable";
     };
+
+    tests = {
+      installedTests = nixosTests.installed-tests.librsvg;
+    };
   };
 
   meta = with lib; {
