@@ -498,9 +498,9 @@ sub addEntry {
             $conf .= $grubStore->search . "\n";
         }
         $conf .= "  $extraPerEntryConfig\n" if $extraPerEntryConfig;
-        $conf .= "  multiboot $xen $xenParams\n" if $xen;
-        $conf .= "  " . ($xen ? "module" : "linux") . " $kernel $kernelParams\n";
-        $conf .= "  " . ($xen ? "module" : "initrd") . " $initrd\n";
+        $conf .= "  multiboot2 $xen $xenParams\n" if $xen;
+        $conf .= "  " . ($xen ? "module2" : "linux") . " $kernel $kernelParams\n";
+        $conf .= "  " . ($xen ? "module2" : "initrd") . " $initrd\n";
         $conf .= "}\n\n";
     }
 }
