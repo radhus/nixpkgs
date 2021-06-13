@@ -143,6 +143,13 @@ callPackage (import ./generic.nix (rec {
     "-Wno-error=zero-length-bounds"
   ];
 
+  patches = with xsa; flatten [
+    XSA_372
+    XSA_373
+    XSA_375
+    XSA_377
+  ];
+
   postPatch = ''
     # Avoid a glibc >= 2.25 deprecation warnings that get fatal via -Werror.
     sed 1i'#include <sys/sysmacros.h>' \
