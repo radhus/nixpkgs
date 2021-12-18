@@ -177,5 +177,5 @@ callPackage (import ./generic.nix (rec {
 
 })) ({
   ocamlPackages = ocaml-ng.ocamlPackages_4_05;
-  pythonPackages = python3Packages;
+  pythonXPackages = python3Packages;
 } // args)

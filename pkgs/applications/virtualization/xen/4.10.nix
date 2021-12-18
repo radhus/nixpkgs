@@ -200,5 +200,5 @@ callPackage (import ./generic.nix (rec {
 
 })) ({
   ocamlPackages = ocaml-ng.ocamlPackages_4_05;
-  pythonPackages = python2Packages;
+  pythonXPackages = python2Packages;
 } // args)
