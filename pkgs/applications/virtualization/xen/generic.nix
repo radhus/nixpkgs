@@ -64,6 +64,9 @@ stdenv.mkDerivation (rec {
   name = "xen-${version}";
 
   dontUseCmakeConfigure = true;
+  dontUseMesonConfigure = true;
+  dontUseNinjaBuild = true;
+  dontUseNinjaInstall = true;
 
   hardeningDisable = [ "stackprotector" "fortify" "pic" ];
 

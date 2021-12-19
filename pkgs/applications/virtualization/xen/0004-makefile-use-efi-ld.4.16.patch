@@ -1,0 +1,46 @@
+diff --git a/xen/arch/x86/Makefile b/xen/arch/x86/Makefile
+index 69b6cfaded..71fa3594bc 100644
+--- a/xen/arch/x86/Makefile
++++ b/xen/arch/x86/Makefile
+@@ -127,14 +127,10 @@ export XEN_BUILD_EFI := $(shell $(CC) $(XEN_CFLAGS) -c efi/check.c -o efi/check.
+ CFLAGS-$(XEN_BUILD_EFI) += -DXEN_BUILD_EFI
+ 
+ # Check if the linker supports PE.
++# TODO nixpkgs: $(call ld-option) does not support EFI_LD.
++# TODO nixpkgs: assume $EFI_LD linker always supports PE with debug.
+ EFI_LDFLAGS = $(patsubst -m%,-mi386pep,$(XEN_LDFLAGS)) --subsystem=10
+-XEN_BUILD_PE := $(if $(XEN_BUILD_EFI),$(call ld-option,$(EFI_LDFLAGS) --image-base=0x100000000 -o efi/check.efi efi/check.o))
+-# If the above failed, it may be merely because of the linker not dealing well
+-# with debug info. Try again with stripping it.
+-ifeq ($(CONFIG_DEBUG_INFO)-$(XEN_BUILD_PE),y-n)
+-EFI_LDFLAGS += --strip-debug
+-XEN_BUILD_PE := $(call ld-option,$(EFI_LDFLAGS) --image-base=0x100000000 -o efi/check.efi efi/check.o)
+-endif
++XEN_BUILD_PE := $(if $(XEN_BUILD_EFI),$(shell $(EFI_LD) $(EFI_LDFLAGS) --image-base=0x100000000 -o efi/check.efi efi/check.o 2>/dev/null && echo y))
+ 
+ ifeq ($(XEN_BUILD_PE),y)
+ 
+@@ -243,20 +239,20 @@ ifeq ($(CONFIG_DEBUG_INFO),y)
+ 	$(if $(filter --strip-debug,$(EFI_LDFLAGS)),echo,:) "Will strip debug info from $(@F)"
+ endif
+ 	$(foreach base, $(VIRT_BASE) $(ALT_BASE), \
+-	          $(LD) $(call EFI_LDFLAGS,$(base)) -T efi.lds -N $< $(relocs-dummy) \
++	          $(EFI_LD) $(call EFI_LDFLAGS,$(base)) -T efi.lds -N $< $(relocs-dummy) \
+ 	                $(BASEDIR)/common/symbols-dummy.o $(note_file_option) -o $(@D)/.$(@F).$(base).0 &&) :
+ 	$(MKRELOC) $(foreach base,$(VIRT_BASE) $(ALT_BASE),$(@D)/.$(@F).$(base).0) >$(@D)/.$(@F).0r.S
+ 	$(NM) -pa --format=sysv $(@D)/.$(@F).$(VIRT_BASE).0 \
+ 		| $(BASEDIR)/tools/symbols $(all_symbols) --sysv --sort >$(@D)/.$(@F).0s.S
+ 	$(MAKE) -f $(BASEDIR)/Rules.mk efi-y= $(@D)/.$(@F).0r.o $(@D)/.$(@F).0s.o
+ 	$(foreach base, $(VIRT_BASE) $(ALT_BASE), \
+-	          $(LD) $(call EFI_LDFLAGS,$(base)) -T efi.lds -N $< \
++	          $(EFI_LD) $(call EFI_LDFLAGS,$(base)) -T efi.lds -N $< \
+ 	                $(@D)/.$(@F).0r.o $(@D)/.$(@F).0s.o $(note_file_option) -o $(@D)/.$(@F).$(base).1 &&) :
+ 	$(MKRELOC) $(foreach base,$(VIRT_BASE) $(ALT_BASE),$(@D)/.$(@F).$(base).1) >$(@D)/.$(@F).1r.S
+ 	$(NM) -pa --format=sysv $(@D)/.$(@F).$(VIRT_BASE).1 \
+ 		| $(BASEDIR)/tools/symbols $(all_symbols) --sysv --sort >$(@D)/.$(@F).1s.S
+ 	$(MAKE) -f $(BASEDIR)/Rules.mk efi-y= $(@D)/.$(@F).1r.o $(@D)/.$(@F).1s.o
+-	$(LD) $(call EFI_LDFLAGS,$(VIRT_BASE)) -T efi.lds -N $< \
++	$(EFI_LD) $(call EFI_LDFLAGS,$(VIRT_BASE)) -T efi.lds -N $< \
+ 	                $(@D)/.$(@F).1r.o $(@D)/.$(@F).1s.o $(note_file_option) -o $@
+ 	$(NM) -pa --format=sysv $(@D)/$(@F) \
+ 		| $(BASEDIR)/tools/symbols --all-symbols --xensyms --sysv --sort >$(@D)/$(@F).map

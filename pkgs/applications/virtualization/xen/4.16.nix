@@ -1,7 +1,7 @@
 { lib, callPackage, fetchurl, fetchpatch, fetchgit
 , ocaml-ng
 , withInternalQemu ? true
-, withInternalTraditionalQemu ? true
+, withInternalTraditionalQemu ? false
 , withInternalSeabios ? true
 , withSeabios ? !withInternalSeabios, seabios
 , withInternalOVMF ? false # FIXME: tricky to build
@@ -13,7 +13,7 @@
 
 # qemu
 , udev, pciutils, xorg, SDL, pixman, acl, glusterfs, spice-protocol, usbredir
-, alsa-lib, glib, python3
+, alsa-lib, glib, python3, ninja, meson
 , ... } @ args:
 
 assert withInternalSeabios -> !withSeabios;
@@ -37,16 +37,16 @@ let
 
   qemuDeps = [
     udev pciutils xorg.libX11 SDL pixman acl glusterfs spice-protocol usbredir
-    alsa-lib glib python3
+    alsa-lib glib python3 ninja meson
   ];
 in
 
 callPackage (import ./generic.nix (rec {
-  version = "4.15.1";
+  version = "4.16.0";
 
   src = fetchurl {
     url = "https://downloads.xenproject.org/release/xen/${version}/xen-${version}.tar.gz";
-    sha256 = "1rmc7gb72xwhr3h9rc3bkac41s8kjjzz45miwdq6yalyq7j7vss5";
+    sha256 = "15g91rnjamdn7jdid79jpx476nl1inpfp6jb06i91l0lws87mj5d";
   };
 
   # Sources needed to build tools and firmwares.
@@ -56,8 +56,8 @@ callPackage (import ./generic.nix (rec {
         url = "https://xenbits.xen.org/git-http/qemu-xen.git";
         # rev = "refs/tags/qemu-xen-${version}";
         # use revision hash - reproducible but must be updated with each new version
-        rev = "e2af2d050338c99e8436e251ad67aafb3ebbd501";
-        sha256 = "sha256-gVykPtzAA7tmpe6iVvnulaW+b0jD3gwL1JXC5yeIA7M=";
+        rev = "b6e539830bf45e2d7a6bd86ddfdf003088b173b0";
+        sha256 = "0dvszx6x7irji6c1xl0199grvqsjrwp0i404xrj5wqzp8f76rniw";
       };
       buildInputs = qemuDeps;
       postPatch = ''
@@ -91,7 +91,7 @@ callPackage (import ./generic.nix (rec {
       src = fetchgit {
         url = "https://xenbits.xen.org/git-http/seabios.git";
         rev = "155821a1990b6de78dde5f98fa5ab90e802021e0";
-        sha256 = "sha256-F3lzr00CMAObJtpz0eZFT/rwjFx+bvlI37/JtHXP5Eo=";
+        sha256 = "0jp4rxsv9jdzvx4gjvkybj6g1yjg8pkd2wys4sdh6c029npp6y8p";
       };
       patches = [ ./0000-qemu-seabios-enable-ATA_DMA.patch ];
       meta.description = "Xen's fork of Seabios";
@@ -100,7 +100,7 @@ callPackage (import ./generic.nix (rec {
     "firmware/ovmf-dir-remote" = {
       src = fetchgit {
         url = "https://xenbits.xen.org/git-http/ovmf.git";
-        rev = "a3741780fe3535e19e02efa869a7cac481891129";
+        rev = "7b4a99be8a39c12d3a7fc4b8db9f0eab4ac688d5";
         sha256 = "0000000000000000000000000000000000000000000000000000";
       };
       meta.description = "Xen's fork of OVMF";
@@ -110,8 +110,8 @@ callPackage (import ./generic.nix (rec {
     "firmware/etherboot/ipxe.git" = {
       src = fetchgit {
         url = "https://git.ipxe.org/ipxe.git";
-        rev = "988d2c13cdf0f0b4140685af35ced70ac5b3283c";
-        sha256 = "1pkf1n1c0rdlzfls8fvjvi1sd9xjd9ijqlyz3wigr70ijcv6x8i9";
+        rev = "3c040ad387099483102708bb1839110bc788cefb";
+        sha256 = "1cmh5grj7zyg5iiqpbsjqslniibb2730zvxsiq86bc0699j1sr6b";
       };
       meta.description = "Xen's fork of iPXE";
     };
@@ -147,12 +147,10 @@ callPackage (import ./generic.nix (rec {
   ];
 
   patches = with xsa; flatten [
-    ./0000-fix-ipxe-src.4.15.patch
-    ./0000-fix-install-python.4.15.patch
-    ./0004-makefile-use-efi-ld.4.15.patch
-    ./0005-makefile-fix-efi-mountdir-use.4.15.patch
-
-    XSA_386
+    ./0000-fix-ipxe-src.4.16.patch
+    ./0000-fix-install-python.4.16.patch
+    ./0004-makefile-use-efi-ld.4.16.patch
+    ./0005-makefile-fix-efi-mountdir-use.4.16.patch
   ];
 
   postPatch = ''
