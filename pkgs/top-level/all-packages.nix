@@ -29367,9 +29367,8 @@ with pkgs;
   xen_4_10-slim = xenPackages.xen_4_10-slim;
   xen_4_10-light = xenPackages.xen_4_10-light;
 
-  xen_4_15 = xenPackages.xen_4_15-vanilla;
-  xen_4_15-slim = xenPackages.xen_4_15-slim;
-  xen_4_15-light = xenPackages.xen_4_15-light;
+  xen_4_16 = xenPackages.xen_4_16-vanilla;
+  xen_4_16-slim = xenPackages.xen_4_16-slim;
 
   xkbset = callPackage ../tools/X11/xkbset { };
 

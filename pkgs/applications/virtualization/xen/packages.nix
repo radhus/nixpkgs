@@ -52,7 +52,7 @@ rec {
     };
   };
 
-  xen_4_15-vanilla = callPackage ./4.15.nix {
+  xen_4_16-vanilla = callPackage ./4.16.nix {
     meta = {
       description = "vanilla";
       longDescription = ''
@@ -65,9 +65,8 @@ rec {
     };
   };
 
-  xen_4_15-slim = xen_4_15-vanilla.override {
+  xen_4_16-slim = xen_4_16-vanilla.override {
     withInternalQemu = false;
-    withInternalTraditionalQemu = true;
     withInternalSeabios = false;
     withSeabios = true;
 
@@ -78,22 +77,6 @@ rec {
         much as possible. Different parts may get out of sync, but
         this builds faster and uses less space than vanilla. Use with
         `qemu_xen` from nixpkgs.
-      '';
-    };
-  };
-
-  xen_4_15-light = xen_4_15-vanilla.override {
-    withInternalQemu = false;
-    withInternalTraditionalQemu = false;
-    withInternalSeabios = false;
-    withSeabios = true;
-
-    meta = {
-      description = "light";
-      longDescription = ''
-        Slimmed-down version of Xen without `qemu-traditional` (you
-        don't need it if you don't know what it is). Use with
-        `qemu_xen-light` from nixpkgs.
       '';
     };
   };
