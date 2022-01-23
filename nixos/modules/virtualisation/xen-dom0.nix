@@ -150,6 +150,9 @@ in
     assertions = [ {
       assertion = pkgs.stdenv.isx86_64;
       message = "Xen currently not supported on ${pkgs.stdenv.hostPlatform.system}";
+    } {
+      assertion = builtins.compareVersions cfg.package.version "4.15" > 0 || (config.boot.loader.grub.enable && (config.boot.loader.grub.efiSupport == false));
+      message = "Xen before 4.15 does not support EFI boot with Grub";
     } ];
 
     virtualisation.xen.package = mkDefault pkgs.xen;
