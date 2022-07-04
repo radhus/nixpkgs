@@ -490,4 +490,53 @@ in {
     name = "386";
     sha256 = "sha256-pAuLgt3sDeL73NSDqZCWxRGZk1tWaYlDbh7cUcJ4s+w=";
   });
+
+  XSA_401 = [
+    (xsaPatch {
+      name = "401/xsa401-4.16-1";
+      sha256 = "nmYNuTON68vJRNSgSzqks1uvRHeLcPn4XmTWdmY/JuA=";
+    })
+    (xsaPatch {
+      name = "401/xsa401-4.16-2";
+      sha256 = "FE1dbTavlJNLxRuC+YnPL/FBjgPvQR+if/bieOprx/U=";
+    })
+  ];
+
+  XSA_402 = [
+    (xsaPatch {
+      name = "402/xsa402-4.16-1";
+      sha256 = "mbfJc2Mzrntum122lQ2AhNaaLYMDM47Q8J2ciSWreUk=";
+    })
+    (xsaPatch {
+      name = "402/xsa402-4.16-2";
+      sha256 = "mQBSd88C+fbaDlwkXacpG4491Ah1r01GuaDcOrjNWyo=";
+    })
+    (xsaPatch {
+      name = "402/xsa402-4.16-3";
+      sha256 = "HkEs2SfmoVhN3zEdrGEzsEQ+CqT93hPp0yAGiHM+Br0=";
+    })
+    (xsaPatch {
+      name = "402/xsa402-4.16-4";
+      sha256 = "MYnJetQX9emFtHlnJ67bn4bTKPysx2G1iTfSYN2koFU=";
+    })
+    (xsaPatch {
+      name = "402/xsa402-4.16-5";
+      sha256 = "E/n+xzdCD0u2oKrQWGkrxZ2RVMNuGcJI8uWQbvN27jk=";
+    })
+  ];
+
+  XSA_404 = [
+    (xsaPatch {
+      name = "404/xsa404-4.16-1";
+      sha256 = "Sw0jM9p8ncPznES/GiHw5YR69qOaXSRM0Ol79ZpkBKw=";
+    })
+    (xsaPatch {
+      name = "404/xsa404-4.16-2";
+      sha256 = "dbvk8LXv6f1k+lJfDZkosQEYN1gbcHB32k+z+o3qFt0=";
+    })
+    (xsaPatch {
+      name = "404/xsa404-4.16-3";
+      sha256 = "wFFAJEraYgqxfymvDPp3Thbx8WUnsSBBjWWQe9eC/2Q=";
+    })
+  ];
 }

@@ -42,11 +42,11 @@ let
 in
 
 callPackage (import ./generic.nix (rec {
-  version = "4.16.0";
+  version = "4.16.1";
 
   src = fetchurl {
     url = "https://downloads.xenproject.org/release/xen/${version}/xen-${version}.tar.gz";
-    sha256 = "15g91rnjamdn7jdid79jpx476nl1inpfp6jb06i91l0lws87mj5d";
+    sha256 = "12j2wxsh6gw4j74mw0dr7hc7a0dp9mkj8xvbpd675kdiz52w77yb";
   };
 
   # Sources needed to build tools and firmwares.
@@ -56,8 +56,8 @@ callPackage (import ./generic.nix (rec {
         url = "https://xenbits.xen.org/git-http/qemu-xen.git";
         # rev = "refs/tags/qemu-xen-${version}";
         # use revision hash - reproducible but must be updated with each new version
-        rev = "b6e539830bf45e2d7a6bd86ddfdf003088b173b0";
-        sha256 = "0dvszx6x7irji6c1xl0199grvqsjrwp0i404xrj5wqzp8f76rniw";
+        rev = "107951211a8d17658e1aaa0c23a8cf29f8806ad8";
+        sha256 = "1k4vvk546qkrisqrkhzyf7h9cqfdr8w5qsml7llgj34xcaq9ddva";
       };
       buildInputs = qemuDeps;
       postPatch = ''
@@ -101,7 +101,7 @@ callPackage (import ./generic.nix (rec {
       src = fetchgit {
         url = "https://xenbits.xen.org/git-http/ovmf.git";
         rev = "7b4a99be8a39c12d3a7fc4b8db9f0eab4ac688d5";
-        sha256 = "0000000000000000000000000000000000000000000000000000";
+        sha256 = "0zsdmdp7xqq80jd4cmw59dp7axd85lkhq8lddshlmcm5z5acfcid";
       };
       meta.description = "Xen's fork of OVMF";
     };
@@ -151,6 +151,10 @@ callPackage (import ./generic.nix (rec {
     ./0000-fix-install-python.4.16.patch
     ./0004-makefile-use-efi-ld.4.16.patch
     ./0005-makefile-fix-efi-mountdir-use.4.16.patch
+
+    XSA_401
+    XSA_402
+    XSA_404
   ];
 
   postPatch = ''
