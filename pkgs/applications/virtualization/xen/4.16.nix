@@ -155,6 +155,7 @@ callPackage (import ./generic.nix (rec {
     XSA_401
     XSA_402
     XSA_404
+    XSA_407
   ];
 
   postPatch = ''

@@ -539,4 +539,43 @@ in {
       sha256 = "wFFAJEraYgqxfymvDPp3Thbx8WUnsSBBjWWQe9eC/2Q=";
     })
   ];
+
+  XSA_407 = [
+    # 407 assumes Xen 4.16 is based on stable-4.16 after 4.16.1...
+    # Use xsa407-4.16.00.patch from Alpine, see:
+    # https://git.alpinelinux.org/aports/commit/main/xen?id=321b9cf52cd3096367b06a85356c6ca415a7d0e8
+    ./xsa407-4.16.00.patch
+    (xsaPatch {
+      name = "407/xsa407-4.16-1";
+      sha256 = "xYIgFP9cxpE5oHu+542T4QWGwufUnigfZM0ebiqEfKQ=";
+    })
+    (xsaPatch {
+      name = "407/xsa407-4.16-2";
+      sha256 = "JUSSwMcsjcCy+vtu6zkmukCgbpNrxdzM/PghdHQ0je8=";
+    })
+    (xsaPatch {
+      name = "407/xsa407-4.16-3";
+      sha256 = "ojFUcpAJNx5JI2Q1GqNnBRq5gl6QZlCP5UnbGW5ZtDc=";
+    })
+    (xsaPatch {
+      name = "407/xsa407-4.16-4";
+      sha256 = "ecYmzzam7m5fauMAgz9jrJRlTLI5ffTwXOiZKBWUKjQ=";
+    })
+    (xsaPatch {
+      name = "407/xsa407-4.16-5";
+      sha256 = "kQtDrrtFj68z/ZdkbCCi9RG4o5juxL/XxVbNUjoVJII=";
+    })
+    (xsaPatch {
+      name = "407/xsa407-4.16-6";
+      sha256 = "069RcoGnG9ztKLkBduFQ6vSi9r2apoXSBNjuyT+ft88=";
+    })
+    (xsaPatch {
+      name = "407/xsa407-4.16-7";
+      sha256 = "8GUOT5zAraKd670mueh90JavoobmIIKE0r1eOy7JIs4=";
+    })
+    (xsaPatch {
+      name = "407/xsa407-4.16-8";
+      sha256 = "W1M9oE9hkB1y58m5NZ1MJQv1Rblf5S5uhHeriQNgQLY=";
+    })
+  ];
 }
