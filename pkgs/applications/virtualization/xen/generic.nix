@@ -4,7 +4,7 @@ config:
 # Xen
 , bison, bzip2, checkpolicy, dev86, figlet, flex, gettext, glib
 , acpica-tools, libaio, libiconv, libuuid, ncurses, openssl, perl
-, xz, yajl, zlib
+, xz, yajl, zlib, zstd
 
 # Either python2Packages or python3Packages,
 # depending on the Xen version requirements.
@@ -77,6 +77,7 @@ stdenv.mkDerivation (rec {
     # Xen
     bison bzip2 checkpolicy dev86 figlet flex gettext glib acpica-tools libaio
     libiconv libuuid ncurses openssl perl pythonXPackages.python xz yajl zlib
+    zstd
 
     # oxenstored
     ocamlPackages.findlib ocamlPackages.ocaml systemd
