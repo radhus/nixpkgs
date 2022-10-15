@@ -42,11 +42,11 @@ let
 in
 
 callPackage (import ./generic.nix (rec {
-  version = "4.16.1";
+  version = "4.16.2";
 
   src = fetchurl {
     url = "https://downloads.xenproject.org/release/xen/${version}/xen-${version}.tar.gz";
-    sha256 = "12j2wxsh6gw4j74mw0dr7hc7a0dp9mkj8xvbpd675kdiz52w77yb";
+    sha256 = "1dqjd2jscq68l99mglsx1pwxjgl3nyxvs0fasj002chcv2wwwx1a";
   };
 
   # Sources needed to build tools and firmwares.
@@ -152,10 +152,9 @@ callPackage (import ./generic.nix (rec {
     ./0004-makefile-use-efi-ld.4.16.patch
     ./0005-makefile-fix-efi-mountdir-use.4.16.patch
 
-    XSA_401
-    XSA_402
-    XSA_404
-    XSA_407
+    # XSA_409 # patches don't apply, but only relevant for ARM
+    XSA_410
+    XSA_411
   ];
 
   postPatch = ''

@@ -491,91 +491,70 @@ in {
     sha256 = "sha256-pAuLgt3sDeL73NSDqZCWxRGZk1tWaYlDbh7cUcJ4s+w=";
   });
 
-  XSA_401 = [
+  XSA_409 = [
     (xsaPatch {
-      name = "401/xsa401-4.16-1";
-      sha256 = "nmYNuTON68vJRNSgSzqks1uvRHeLcPn4XmTWdmY/JuA=";
+      name = "409-4.16/0001-libxl-docs-Use-arch-specific-default-paging-memory";
+      sha256 = "17f3dqkhnwhwqpkwc0lsdf5vi6f6vh88mgv15d1n3bglrw17kr9c";
     })
     (xsaPatch {
-      name = "401/xsa401-4.16-2";
-      sha256 = "FE1dbTavlJNLxRuC+YnPL/FBjgPvQR+if/bieOprx/U=";
-    })
-  ];
-
-  XSA_402 = [
-    (xsaPatch {
-      name = "402/xsa402-4.16-1";
-      sha256 = "mbfJc2Mzrntum122lQ2AhNaaLYMDM47Q8J2ciSWreUk=";
+      name = "409-4.16/0002-xen-arm-Construct-the-P2M-pages-pool-for-guests";
+      sha256 = "0v38lx1wr9pxknc47irb0bdxh88f01jk2ssx1n4shvaakj6q7b8q";
     })
     (xsaPatch {
-      name = "402/xsa402-4.16-2";
-      sha256 = "mQBSd88C+fbaDlwkXacpG4491Ah1r01GuaDcOrjNWyo=";
+      name = "409-4.16/0003-xen-arm-libxl-Implement-XEN_DOMCTL_shadow_op-for-Arm";
+      sha256 = "1iq0rknnn8b3220b1p3mvb4f6pzhj3zkpwqji9cg9003bp0zc6r0";
     })
     (xsaPatch {
-      name = "402/xsa402-4.16-3";
-      sha256 = "HkEs2SfmoVhN3zEdrGEzsEQ+CqT93hPp0yAGiHM+Br0=";
-    })
-    (xsaPatch {
-      name = "402/xsa402-4.16-4";
-      sha256 = "MYnJetQX9emFtHlnJ67bn4bTKPysx2G1iTfSYN2koFU=";
-    })
-    (xsaPatch {
-      name = "402/xsa402-4.16-5";
-      sha256 = "E/n+xzdCD0u2oKrQWGkrxZ2RVMNuGcJI8uWQbvN27jk=";
+      name = "409-4.16/0004-xen-arm-Allocate-and-free-P2M-pages-from-the-P2M-poo";
+      sha256 = "01i1fjhx1mc7yz7z2ck2hm3wmf8ays08vcc8zgzkzrrnasvskkpq";
     })
   ];
 
-  XSA_404 = [
+  XSA_410 = [
     (xsaPatch {
-      name = "404/xsa404-4.16-1";
-      sha256 = "Sw0jM9p8ncPznES/GiHw5YR69qOaXSRM0Ol79ZpkBKw=";
+      name = "410/xsa410-4.16-01";
+      sha256 = "1bz7q7wcxsyzphc9laj66n03032isllqqswwdcnf05q9w5s73197";
     })
     (xsaPatch {
-      name = "404/xsa404-4.16-2";
-      sha256 = "dbvk8LXv6f1k+lJfDZkosQEYN1gbcHB32k+z+o3qFt0=";
+      name = "410/xsa410-4.16-02";
+      sha256 = "0wg217cr7xc750j2qriqafql6ffbwjd4012hhzwj7479k3ik1hvz";
     })
     (xsaPatch {
-      name = "404/xsa404-4.16-3";
-      sha256 = "wFFAJEraYgqxfymvDPp3Thbx8WUnsSBBjWWQe9eC/2Q=";
+      name = "410/xsa410-4.16-03";
+      sha256 = "1n3ic9ir22qadms08xk0yhyqf9wmncdmw32r4909iv35dbpslwls";
+    })
+    (xsaPatch {
+      name = "410/xsa410-4.16-04";
+      sha256 = "1qyk94fdhm7w5fnkmh6fp1cpyqs29jlvn36fwqk89h9kb4pbpzsd";
+    })
+    (xsaPatch {
+      name = "410/xsa410-4.16-05";
+      sha256 = "0zmkm9pxnsaizbfjpd5v88v0d1vl06g3k8ddraaa5rz0wpir2p9f";
+    })
+    (xsaPatch {
+      name = "410/xsa410-4.16-06";
+      sha256 = "159mi2fadzvb60629idzmzqp649113xhrgw46025lgv3bznxjx41";
+    })
+    (xsaPatch {
+      name = "410/xsa410-4.16-07";
+      sha256 = "1qcw566w1d5vbfwiq3xhr9r942gjavsms8hday6y3a2i1nyr51xp";
+    })
+    (xsaPatch {
+      name = "410/xsa410-4.16-08";
+      sha256 = "1synfav8w16i309blc5k7p7qc186ppvvlc65db7qbrli62zi8gqz";
+    })
+    (xsaPatch {
+      name = "410/xsa410-4.16-09";
+      sha256 = "12b56pd3vgqbbgzqfwfpznq18acq08s4pjb7d4kkcr0mb7akbbv3";
+    })
+    (xsaPatch {
+      name = "410/xsa410-4.16-10";
+      sha256 = "1hgh72w1jjwai4d9mibhwyf0bspc54gljcak7xc9gpr5fa0dms45";
     })
   ];
 
-  XSA_407 = [
-    # 407 assumes Xen 4.16 is based on stable-4.16 after 4.16.1...
-    # Use xsa407-4.16.00.patch from Alpine, see:
-    # https://git.alpinelinux.org/aports/commit/main/xen?id=321b9cf52cd3096367b06a85356c6ca415a7d0e8
-    ./xsa407-4.16.00.patch
-    (xsaPatch {
-      name = "407/xsa407-4.16-1";
-      sha256 = "xYIgFP9cxpE5oHu+542T4QWGwufUnigfZM0ebiqEfKQ=";
-    })
-    (xsaPatch {
-      name = "407/xsa407-4.16-2";
-      sha256 = "JUSSwMcsjcCy+vtu6zkmukCgbpNrxdzM/PghdHQ0je8=";
-    })
-    (xsaPatch {
-      name = "407/xsa407-4.16-3";
-      sha256 = "ojFUcpAJNx5JI2Q1GqNnBRq5gl6QZlCP5UnbGW5ZtDc=";
-    })
-    (xsaPatch {
-      name = "407/xsa407-4.16-4";
-      sha256 = "ecYmzzam7m5fauMAgz9jrJRlTLI5ffTwXOiZKBWUKjQ=";
-    })
-    (xsaPatch {
-      name = "407/xsa407-4.16-5";
-      sha256 = "kQtDrrtFj68z/ZdkbCCi9RG4o5juxL/XxVbNUjoVJII=";
-    })
-    (xsaPatch {
-      name = "407/xsa407-4.16-6";
-      sha256 = "069RcoGnG9ztKLkBduFQ6vSi9r2apoXSBNjuyT+ft88=";
-    })
-    (xsaPatch {
-      name = "407/xsa407-4.16-7";
-      sha256 = "8GUOT5zAraKd670mueh90JavoobmIIKE0r1eOy7JIs4=";
-    })
-    (xsaPatch {
-      name = "407/xsa407-4.16-8";
-      sha256 = "W1M9oE9hkB1y58m5NZ1MJQv1Rblf5S5uhHeriQNgQLY=";
-    })
-  ];
+  XSA_411 = (xsaPatch {
+    name = "411";
+    sha256 = "0mxcqcq0ss3wp5lxkc995paxwbzf7iwbn2vik9184g6hx7jf40h8";
+  });
 }
